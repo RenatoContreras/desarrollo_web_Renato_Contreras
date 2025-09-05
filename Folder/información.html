@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Información del Aviso de Adopción</title>
+    <style>
+
+        .foto-miniatura {
+            width: 320px;
+            height: 240px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            text-align: center;
+        }
+        #modal-img {
+            width: 800px;
+            height: 600px;
+            object-fit: cover;
+        }
+        #cerrar-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+    </style>
+
+
+
+
+</head>
+<body>
+
+    <h1>Información de Aviso de Adopción</h1>
+
+    <div id="contenido"></div>
+
+    <div>
+        <button onclick="window.history.back()">Volver al Listado</button>
+        <a href="index.html"><button>Volver al Inicio</button></a>
+    </div>
+
+    <div id="modal">
+        <span id="cerrar-modal" onclick="cerrarModal()">X</span>
+        <img id="modal-img" src="" alt="Foto ampliada">
+    </div>
+
+    <script>
+        // Base de datos de avisos
+        const avisos = {
+            '1': {
+                fechaPublicacion: '2025-01-26 12:00',
+                fechaEntrega: '2025-02-05',
+                region: 'Aysén',
+                comuna: 'Coyhaique',
+                sector: 'Veintiuno de Mayo 1671',
+                nombre: 'María González',
+                telefono: '+56 9 1234 5678',
+                email: 'maria.gonzalez@email.com',
+                tipoMascota: 'perro',
+                cantidad: '1',
+                edad: '5 años',
+                fotos: ['Fotos_T1/canela.jpg', 'Fotos_T1/canela.jpg']
+            },
+            '2': {
+                fechaPublicacion: '2025-08-18 12:00',
+                fechaEntrega: '2025-08-25',
+                region: 'Aysén',
+                comuna: 'Lago Verde',
+                sector: 'Sargento Aldea 637',
+                nombre: 'Carlos Rodríguez',
+                telefono: '+56 9 8765 4321',
+                email: 'carlos.rodriguez@email.com',
+                tipoMascota: 'gato',
+                cantidad: '1',
+                edad: '10 años',
+                fotos: ['Fotos_T1/felisa.jpg', 'Fotos_T1/felisa2.jpg', 'Fotos_T1/felisa3.jpg']
+            },
+            '3': {
+                fechaPublicacion: '2024-12-13 12:00',
+                fechaEntrega: '2024-12-20',
+                region: 'Aysén',
+                comuna: 'Cisnes',
+                sector: 'Pedro Aguirre Cerda 175',
+                nombre: 'Ana Martínez',
+                telefono: '+56 9 5555 1234',
+                email: 'ana.martinez@email.com',
+                tipoMascota: 'perro',
+                cantidad: '1',
+                edad: '5 años',
+                fotos: ['Fotos_T1/kira.jpg']
+            },
+            '4': {
+                fechaPublicacion: '2025-08-19 12:00',
+                fechaEntrega: '2025-08-26',
+                region: 'Aysén',
+                comuna: 'Guaitecas',
+                sector: 'Aeropuerto 277',
+                nombre: 'Juan Pérez',
+                telefono: '+56 9 4444 9876',
+                email: 'juan.perez@email.com',
+                tipoMascota: 'perro',
+                cantidad: '2',
+                edad: '3 años',
+                fotos: ['Fotos_T1/benja_dogs.jpg']
+            },
+            '5': {
+                fechaPublicacion: '2025-10-17 12:00',
+                fechaEntrega: '2025-10-24',
+                region: 'Aysén',
+                comuna: 'Río Ibáñez',
+                sector: 'Pasaje Hudson 548',
+                nombre: 'Laura Silva',
+                telefono: '+56 9 3333 4567',
+                email: 'laura.silva@email.com',
+                tipoMascota: 'gato',
+                cantidad: '2',
+                edad: '6 años',
+                fotos: ['Fotos_T1/benja_cats.jpg']
+            }
+        };
+
+        // Función para mostrar imagen en modal
+        function ampliarFoto(src) {
+            document.getElementById('modal-img').src = src;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        // Función para cerrar modal
+        function cerrarModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+
+        // Cargar información del aviso
+        function cargarInformacion() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (id && avisos[id]) {
+                const aviso = avisos[id];
+                const contenido = document.getElementById('contenido');
+                
+                contenido.innerHTML = `
+                    <h2>Información del Aviso</h2>
+                    <table>
+                        <tr>
+                            <th>Fecha Publicación</th>
+                            <td>${aviso.fechaPublicacion}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha Entrega</th>
+                            <td>${aviso.fechaEntrega}</td>
+                        </tr>
+                    </table>
+
+                    <h2>Lugar</h2>
+                    <table>
+                        <tr>
+                            <th>Región</th>
+                            <td>${aviso.region}</td>
+                        </tr>
+                        <tr>
+                            <th>Comuna</th>
+                            <td>${aviso.comuna}</td>
+                        </tr>
+                        <tr>
+                            <th>Sector</th>
+                            <td>${aviso.sector}</td>
+                        </tr>
+                    </table>
+
+                    <h2>Contacto</h2>
+                    <table>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>${aviso.nombre}</td>
+                        </tr>
+                        <tr>
+                            <th>Teléfono</th>
+                            <td>${aviso.telefono}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>${aviso.email}</td>
+                        </tr>
+                    </table>
+
+                    <h2>Mascota</h2>
+                    <table>
+                        <tr>
+                            <th>Tipo</th>
+                            <td>${aviso.tipoMascota}</td>
+                        </tr>
+                        <tr>
+                            <th>Cantidad</th>
+                            <td>${aviso.cantidad}</td>
+                        </tr>
+                        <tr>
+                            <th>Edad</th>
+                            <td>${aviso.edad}</td>
+                        </tr>
+                    </table>
+
+                    <h2>Fotos (${aviso.fotos.length})</h2>
+                    <div>
+                        ${aviso.fotos.map(foto => `
+                            <img src="${foto}" 
+                                 alt="Foto" 
+                                 class="foto-miniatura"
+                                 onclick="ampliarFoto('${foto}')">
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                document.getElementById('contenido').innerHTML = 
+                    '<p>Aviso no encontrado</p>';
+            }
+        }
+
+        // Cargar la información cuando la página esté lista
+        document.addEventListener('DOMContentLoaded', cargarInformacion);
+    </script>
+</body>
+
+
+
+
+
+
+
+
+
+</html>
