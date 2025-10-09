@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Información del Aviso de Adopción</title>
+    <style>
+
+        .foto-miniatura {
+            width: 320px;
+            height: 240px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            text-align: center;
+        }
+        #modal-img {
+            width: 800px;
+            height: 600px;
+            object-fit: cover;
+        }
+        #cerrar-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+    </style>   
+</head>
+<body>
+            {% if ultimos_avisos %} 
+                <h2>Información del Aviso</h2>
+ 
+                        <table>
+                
+                            <tr>
+                                <th>Fecha Publicación</th>
+                                <td>{{ultimos_avisos.fecha_ingreso}}</td>
+                            </tr>
+                            <tr>
+                                <th>Fecha Entrega</th>
+                                <td>{{ultimos_avisos.fecha_entrega}}</td>
+                            </tr>
+                        </table>
+
+                        <h2>Lugar</h2>
+                        <table>
+                            <tr>
+                                <th>Región</th>
+                                <td>{{ultimos_avisos.comuna.region.nombre}}</td>
+                            </tr>
+                            <tr>
+                                <th>Comuna</th>
+                                <td>{{ultimos_avisos.comuna.nombre}}</td>
+                            </tr>
+                            <tr>
+                                <th>Sector</th>
+                                <td>{{ultimos_avisos.sector}}</td>
+                            </tr>
+                        </table>
+
+                        <h2>Contacto</h2>
+                        <table>
+                            <tr>
+                                <th>Nombre</th>
+                                <td>{{ultimos_avisos.nombre}}</td>
+                            </tr>
+                            <tr>
+                                <th>Teléfono</th>
+                                <td>{{ultimos_avisos.celular}}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ultimos_avisos.email}}</td>
+                            </tr>
+                        </table>
+
+                        <h2>Mascota</h2>
+                        <table>
+                            <tr>
+                                <th>Tipo</th>
+                                <td>{{ultimos_avisos.tipo}}</td>
+                            </tr>
+                            <tr>
+                                <th>Cantidad</th>
+                                <td>{{ultimos_avisos.cantidad}}</td>
+                            </tr>
+                            <tr>
+                                <th>Edad</th>
+                                <td>{{ ultimos_avisos.edad }} {% if ultimos_avisos.unidad_medida == 'm' %} Meses {%else%} Años{%endif%}</td>
+                            </tr>
+                        </table>
+
+                        <h2>Fotos (${ultimos_avisos.fotos.length})</h2>
+
+                
+            {% else %}
+
+                <p>No hay nada</p>
+                
+            {% endif %}  
+
+
+    <div>
+        <a href="{{url_for('index')}}"><button>Volver a Inicio</button></a>
+        <a href="{{url_for('listado')}}"><button>Volver a Listado</button></a>
+    </div>
+
+
+</body>
+</html>

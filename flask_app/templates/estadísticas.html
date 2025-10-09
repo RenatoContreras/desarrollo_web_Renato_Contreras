@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Estadísticas</title>
+
+</head>
+<body>
+
+    <img src="{{ url_for('static', filename='uploads/Gráfico_Barras.jpg') }}" width="600" height="350"><br>
+    <img src="{{ url_for('static', filename='uploads/Gráfico_Líneas.jpg') }}" width="600" height="350"><br>
+    <img src="{{ url_for('static', filename='uploads/Gráfico_Torta.jpg') }}" width="600" height="350"><br>
+
+    <div>
+        <a href="{{url_for('index')}}"><button>Volver</button></a>
+    </div>
+
+
+</body>
+</html>

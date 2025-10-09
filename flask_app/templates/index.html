@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página Adopción</title>
+    <style>
+        table, th, td{
+            border:1px solid black;
+        }
+    </style>
+</head>
+    <body>
+
+        <h1>Bienvenidos a esta página de adopción de perros y gatos</h1>
+        
+        <a href="{{ url_for('agregar') }}"><div>Agregar Aviso Adopción</div></a>
+        <a href="{{ url_for('listado') }}"><div>Listado Adopciones</div></a>
+        <a href="{{ url_for('estadisticas') }}"><div>Estadísticas</div></a>
+
+
+        <h2>Últimos 5 Avisos de Adopción</h2>
+
+        <div class="avisos">
+            
+            {% if ultimos_avisos %}
+
+                <table>
+                    <tr>
+                        <th>Fecha Publicación</th>
+                        <th>Comuna</th>
+                        <th>Sector</th>
+                        <th>Cantidad, Tipo, Edad</th>
+                    </tr>
+                {% for aviso in ultimos_avisos %}
+                    <tr>
+                        <td>{{ aviso.fecha_ingreso.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td> {{ aviso.comuna.nombre }}</td>
+                        <td>{{ aviso.sector }}</td>
+                        <td>{{ aviso.cantidad }} {{ aviso.tipo }} <br>{{ aviso.edad }} {% if aviso.unidad_medida == 'm' %} Meses {%else%} Años{%endif%}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% else %}
+                <p>No hay avisos publicados aun</p>
+            {% endif %}
+        </div>
+
+    </body>
+
+</html>
