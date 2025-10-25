@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Agregar Aviso Adopción</title>
+
+
+
+</head>
+    <body>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}        
+
+
+
+        <h1>Agregar Aviso Adopción</h1>
+        <div>
+            <form action="{{ url_for('formulario') }}" method="POST" enctype="multipart/form-data" name="formulario" id="avisoForm" novalidate>
+                <h3>Lugar</h3>
+
+
+                <label for="region_id">Región:</label>
+                <select name="region_id" id="region_id" required onchange="cargarComunas()">
+                    <option value="">Seleccione una región</option>
+                    {% for region in regiones %}
+                        <option value="{{ region.id }}">{{ region.nombre }}</option>
+                    {% endfor %}
+                </select><br>
+
+                <label for="comuna_id">Comuna:</label>
+                <select name="comuna_id" id="comuna_id" value="{{sector}}" required>  
+                    <option value="">Selecciona una comuna</option>
+                </select><br>
+
+                <label for="sector">Sector</label>
+                <input type="text" name="sector" id="sector" required><br>  
+
+                <h3>Contacto</h3>
+
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" minlength="3" required><br>  
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required><br>  
+
+                <label for="celular">Teléfono</label>
+                <input type="tel" name="celular" id="celular" minlength="0" maxlength="999999999" required><br>  
+                
+
+                <!--["whatsapp", "telegram", "X","instagram", "tiktok"]-->
+                <label>Medio de Contacto 1</label>
+                <select name="contactos0plataforma" class="plataforma" required> 
+                        <option value="">Seleccione Medio de Contacto</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="telegram">Telegram</option>
+                </select>
+
+                <label>Id o URL</label>
+                <input type="text" name="contactos0identificador" class="identificador" required>
+
+
+
+
+
+                <h3>Mascota</h3>
+
+                <label for="tipo">Tipo de animal</label>
+                <select name="tipo" id="tipo" required>  
+                    <option value="">Seleccione</option>
+                    <option value="perro">Perro</option>
+                    <option value="gato">Gato</option>
+                </select><br>
+
+
+                <label for="cantidad">Cantidad</label>
+                <input type="number" name="cantidad" id="cantidad" min="1" required><br>  
+
+
+                <label for="edad">Edad</label>
+                <input type="number" name="edad" id="edad" min="1" max="99" required><br>  
+
+                <label for="unidad_medida">Unidad Edad</label>
+                <select name="unidad_medida" id="unidad_medida" required>  
+                    <option value="">Seleccione una Unidad</option>
+                    <option value="m">Meses</option>
+                    <option value="a">Años</option>
+                </select><br>                
+
+                <label for="fecha_entrega">Fecha Entrega</label>
+                <input type="datetime-local" name="fecha_entrega" id="fecha_entrega" required><br> 
+
+                <label for="descripcion">Descripción</label>
+                <input name="descripcion" id="descripcion" minlength="0" maxlength="200" required></input><br>
+
+                <label for="fotos">Fotos</label>
+                <input type="file" name="fotos" id="fotos" multiple accept="image/*" required><br>  
+
+
+                <div>
+                    <button id= "submit-btn" type="button">Agregar Este Aviso</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+
+
+        <script>
+
+            function cargarComunas() {
+                const regionId = document.getElementById('region_id').value;
+                const comunaSelect = document.getElementById('comuna_id');
+                
+                if (regionId) {
+                    fetch(`/comunas/${regionId}`)
+                        .then(response => response.json())
+                        .then(comunas => {
+                            comunaSelect.innerHTML = '<option value="">Selecciona una comuna</option>';
+                            comunas.forEach(comuna => {
+                                comunaSelect.innerHTML += `<option value="${comuna.id}">${comuna.nombre}</option>`;
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            comunaSelect.innerHTML = '<option value="">Error al cargar comunas</option>';
+                        });
+                } else {
+                    comunaSelect.innerHTML = '<option value="">Selecciona una comuna</option>';
+                }
+            }
+
+
+        </script>
+
+        <script src="{{ url_for('static', filename='validación.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Listado de Avisos de Adopción</title>
+    <style>
+        table, th, td{
+            border:1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Listado de Avisos de Adopción</h1>
+    {% if ultimos_avisos %}
+        <table>
+            <tr>
+                <th>Fecha Publicación</th>
+                <th>Fecha Entrega</th>
+                <th>Comuna</th>
+                <th>Sector</th>
+                <th>Cantidad, Tipo, Edad</th>
+                <th>Nombre, Contacto</th>
+                <th>Cantidad Fotos</th>
+            </tr>
+            {% for aviso in ultimos_avisos %}
+                <tr onclick="window.location.href='{{ url_for('informacion', aviso_id=aviso.id) }}'">
+                    <td>{{ aviso.fecha_ingreso.strftime('%d/%m/%Y %H:%M') }}</td>
+                    <td>2025-02-05</td>
+                    <td>{{ aviso.comuna.nombre }}</td>
+                    <td>{{ aviso.sector }}</td>
+                    <td>{{ aviso.cantidad }} {{ aviso.tipo }} <br>{{ aviso.edad }} {% if aviso.unidad_medida == 'm' %} Meses {%else%} Años{%endif%}</td>
+                    <td>{{ aviso.nombre }}<br>{{ aviso.celular }}</td>
+                        <td> 
+                        {% if aviso.fotos %}
+
+                                {{  aviso.fotos|length  }}
+
+                        {% else %}
+
+                            <p>No hay fotos</p>
+
+                        {%endif%}
+                        </td>
+                </tr>
+            {%endfor%}
+                
+        </table>
+    {%else%}
+        <p>No hay avisos publicados aun</p>
+    {% endif %}
+
+
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('listado', page=page-1) }}" class="btn">Anterior</a>
+        {% endif %}
+        
+        <span>Página {{ page }} de {{ Paginas }}</span>
+        
+        {% if Paginas > page %}
+            <a href="{{ url_for('listado', page=page+1) }}" class="btn">Siguiente</a>
+        {% endif %}
+    </div>
+
+
+
+    
+    <div>
+        <a href="{{url_for('index')}}"><button>Volver</button></a>
+    </div>
+
+</body>
+</html>

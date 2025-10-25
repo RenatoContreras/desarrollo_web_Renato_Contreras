@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Estadísticas</title>
+    <style>
+
+    .stats-container {
+        padding: 1rem;
+        background: white;
+        border: 0.2em solid var(--black-color);
+        border-radius: 0.25em;
+        box-shadow: 0.2em 0.2em 0px 0px black;
+        margin: 0 auto;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.2rem;
+
+}
+
+    </style>
+
+</head>
+<body>
+
+    <h1>Estadísticas</h1>
+
+    {% block content %}    
+    <div class="stats-container">
+        <figure class="highcharts-figure">
+            <div id="container1"></div>
+            <p class="highcharts-description">
+                El anterior grafico, es un gráfico
+            </p>
+        </figure>
+    </div>
+
+    <div class="stats-container">
+        <figure class="highcharts-figure">
+            <div id="container2"></div>
+            <p class="highcharts-description">
+                El anterior grafico, es otro gráfico
+            </p>
+        </figure>
+    </div>
+
+    <div class="stats-container">
+        <figure class="highcharts-figure">
+            <div id="container3"></div>
+            <p class="highcharts-description">
+                El anterior grafico, el último gráfico
+            </p>
+        </figure>
+    </div>
+
+
+
+
+
+    {% endblock content %}
+
+    {% block javascript %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="{{url_for('static', filename='stats.js')}}"></script>
+    {% endblock %}
+
+
+
+
+    
+
+    <a href="{{url_for('index')}}"><button>Volver</button></a>
+
+</body>
+</html>
