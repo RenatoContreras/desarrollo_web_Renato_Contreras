@@ -38,7 +38,6 @@ public class Nota {
     @JoinColumn(name = "aviso_id", insertable = false, updatable = false)
     private Aviso aviso;
     
-    // getters y setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     

@@ -26,17 +26,14 @@ public class ApiService {
     
     @Transactional
     public Nota agregarNota(Integer avisoId, Integer nota) {
-        // Validar que la nota esté entre 1 y 7
         if (nota < 1 || nota > 7) {
             throw new IllegalArgumentException("La nota debe estar entre 1 y 7");
         }
         
-        // Validar que el aviso existe
     if (!avisoRepository.existsById(avisoId)) {
         throw new IllegalArgumentException("Aviso no encontrado");
     }
         
-        // Crear y guardar la nueva nota
         Nota nuevaNota = new Nota();
         nuevaNota.setAvisoId(avisoId);
         nuevaNota.setNota(nota);

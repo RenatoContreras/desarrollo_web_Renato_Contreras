@@ -33,7 +33,6 @@ public class Comuna {
     @Column(name = "region_id")
     private Integer regionId;
     
-    // getters y setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     

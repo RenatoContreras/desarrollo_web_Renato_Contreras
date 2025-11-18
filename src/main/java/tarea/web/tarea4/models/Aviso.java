@@ -67,7 +67,6 @@ public class Aviso {
     @OneToMany(mappedBy = "aviso", fetch = FetchType.LAZY)
     private List<Nota> notas;
     
-    // getters y setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     
@@ -113,7 +112,6 @@ public class Aviso {
     public List<Nota> getNotas() { return notas; }
     public void setNotas(List<Nota> notas) { this.notas = notas; }
     
-    // Método para calcular promedio de notas
     public Double getPromedioNotas() {
         if (notas == null || notas.isEmpty()) {
             return 0.0;
